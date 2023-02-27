@@ -6,7 +6,7 @@ ARG GID=1000
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Copenhagen
 
-RUN deps='sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build cmake git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix' \
+RUN deps='sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build cmake git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev' \
     && apt-get update \
     && apt-get install -y --no-install-recommends $deps \
     && rm -rf /var/lib/apt/lists/*
