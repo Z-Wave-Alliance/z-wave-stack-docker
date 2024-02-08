@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Copenhagen
 
 # Install gpg by itself as it needs recommended packages (at least dirmngr).
-RUN deps='sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build gcovr git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev clang libc6-dbg:i386 valgrind texlive-bibtex-extra default-jre nodejs python3-yaml' \
+RUN deps='gdb sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build gcovr git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev clang libc6-dbg:i386 valgrind texlive-bibtex-extra default-jre nodejs python3-yaml' \
     && dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get install -y --no-install-recommends $deps \
