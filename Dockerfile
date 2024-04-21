@@ -29,7 +29,8 @@ RUN mkdir -p /usr/local/share/plantuml \
     --output ${PLANTUML_JAR_PATH} \
   && sha256sum ${PLANTUML_JAR_PATH} | grep '^f1070c42b20e6a38015e52c10821a9db13bedca6b5d5bc6a6192fcab6e612691 '
 
-# Fetch and install kaitai-compiler
+# Fetch and install kaitai-compiler until maintained by distro
+# TODO: https://bugs.debian.org/919693
 ARG KAITAI_URL=https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/0.10/kaitai-struct-compiler_0.10_all.deb
 ARG KAITAI_SHA=2d8d9a4f72fa348bfff6f85a1b01802485bf20003f03e254ae37ffa362fdd398
 RUN mkdir -p /tmp/kaitai/ && \
