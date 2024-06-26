@@ -41,6 +41,21 @@ RUN mkdir -p /tmp/kaitai/ && \
     apt-get install -y ./kaitai-compiler.deb && \
     rm -rf /tmp/kaitai/
 
+# Github client
+# TODO: https://tracker.debian.org/pkg/gh# (wait v2.51+)
+# https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+RUN \
+  sudo mkdir -p -m 755 /etc/apt/keyrings \
+  && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+  && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+  | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && sudo apt update \
+  && sudo apt install gh -y \
+  && sudo apt clean \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN groupadd -g $GID -o build
 RUN useradd -m -u $UID -g $GID -G sudo -p -o -s /bin/bash build
