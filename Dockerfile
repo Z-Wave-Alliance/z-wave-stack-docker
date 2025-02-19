@@ -14,6 +14,7 @@ RUN echo 'deb http://deb.debian.org/debian bookworm-backports main' \
 RUN deps='gdb sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build gcovr git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev clang libc6-dbg:i386 openssh-client valgrind texlive-bibtex-extra default-jre nodejs python3-yaml\
  cmake/bookworm-backports cmake-data/bookworm-backports\
  doxygen\
+ uncrustify \
  ' \
     && dpkg --add-architecture i386 \
     && apt-get update \
@@ -22,7 +23,7 @@ RUN deps='gdb sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison g
     && rm -rf /var/lib/apt/lists/*
 
 # Plantuml
-# TODO: https://bugs.debian.org/1004135
+# TODO: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004135#53 (Last-Update: 20250219)
 ENV PLANTUML_JAR_PATH=/usr/local/share/plantuml/plantuml.jar
 RUN mkdir -p /usr/local/share/plantuml \
   && curl -L https://github.com/plantuml/plantuml/releases/download/v1.2022.0/plantuml-1.2022.0.jar \
