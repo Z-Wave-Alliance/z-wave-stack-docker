@@ -18,6 +18,7 @@ RUN echo 'deb http://deb.debian.org/debian bookworm-backports main' \
 RUN deps='gdb sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch python3 python3-pip python3-virtualenv python3-build gcovr git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev clang libc6-dbg:i386 openssh-client valgrind texlive-bibtex-extra default-jre nodejs python3-yaml\
  cmake/bookworm-backports cmake-data/bookworm-backports\
  doxygen\
+ reuse \
  uncrustify \
  ' \
     && dpkg --add-architecture i386 \
