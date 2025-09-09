@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Silicon Laboratories Inc. <https://www.silabs.com/>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
 FROM debian:bookworm
 
 ARG UID=1000

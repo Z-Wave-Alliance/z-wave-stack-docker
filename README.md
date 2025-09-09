@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: Silicon Laboratories Inc. <https://www.silabs.com/>
+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # z-wave-stack-docker
 Offers a Docker image for building Z-Wave
 
