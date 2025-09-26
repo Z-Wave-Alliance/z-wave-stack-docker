@@ -66,7 +66,9 @@ RUN \
 # Reuse 5.1+
 RUN \
   echo "TODO: https://bugs.debian.org/1116303#2025" \
-  && pipx install reuse
+  && pipx install reuse \
+  && sudo install -d /usr/local/bin \
+  && sudo ln -fs "${HOME}/.local/bin/reuse" /usr/local/bin
 
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN groupadd -g $GID -o build
