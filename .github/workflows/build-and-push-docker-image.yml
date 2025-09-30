@@ -1,10 +1,12 @@
+# YAML -*- mode: yaml; tab-width: 2; indent-tabs-mode: nil; coding: utf-8 -*-
 # SPDX-FileCopyrightText: Silicon Laboratories Inc. <https://www.silabs.com/>
 #
 # SPDX-License-Identifier: BSD-3-Clause
+---
 
 name: Create and publish Z-Wave Docker image
 
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
     branches:
       - main
@@ -34,6 +36,11 @@ jobs:
         run: |
           sudo apt install -y reuse
           reuse lint
+
+      - name: Lint check
+        run: |
+          sudo apt install -y yamllint
+          find . -regex ".*\.y[a]?ml" -exec yamllint "{}" \;
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
