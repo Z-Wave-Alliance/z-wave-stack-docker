@@ -1,27 +1,59 @@
 # SPDX-FileCopyrightText: Silicon Laboratories Inc. <https://www.silabs.com/>
+# SPDX-FileCopyrightText: Z-Wave Alliance <https://z-wavealliance.org/>
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
-FROM debian:bookworm
-
-ARG UID=1000
-ARG GID=1000
+FROM debian:trixie
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Copenhagen
 
-# Add backports channel for recent applications
-RUN echo 'deb http://deb.debian.org/debian bookworm-backports main' \
-  > /etc/apt/sources.list.d/backports.list
-
 # Install gpg by itself as it needs recommended packages (at least dirmngr).
-RUN deps='gdb sudo curl bzip2 ca-certificates wget zip unzip tzdata flex bison graphviz make libc6-dev patch \
- python3 python3-pip python3-virtualenv python3-build python3-yaml pipx \
- gcovr git gcc g++ gcc-multilib g++-multilib libboost-log1.74.0 dos2unix ruby ruby-dev clang libc6-dbg:i386 openssh-client valgrind texlive-bibtex-extra default-jre nodejs \
- cmake/bookworm-backports cmake-data/bookworm-backports\
- doxygen\
- uncrustify \
- ' \
+RUN deps='gdb \
+  sudo \
+  curl \
+  bzip2 \
+  ca-certificates \
+  wget \
+  zip \
+  unzip \
+  tzdata \
+  flex \
+  bison \
+  graphviz \
+  make \
+  libc6-dev \
+  patch \
+  python3 \
+  python3-pip \
+  python3-virtualenv \
+  python3-build \
+  python3-yaml \
+  pipx \
+  gcovr \
+  git \
+  gcc \
+  g++ \
+  gcc-multilib \
+  g++-multilib \
+  libboost-log1.88.0 \
+  dos2unix \
+  ruby \
+  ruby-dev \
+  clang \
+  libc6-dbg:i386 \
+  openssh-client \
+  valgrind \
+  texlive-bibtex-extra \
+  default-jre \
+  nodejs \
+  cmake \
+  cmake-data \
+  doxygen \
+  uncrustify \
+  gosu \
+  bash-completion \
+  ' \
     && dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get install -y --no-install-recommends $deps \
@@ -70,8 +102,13 @@ RUN \
   && sudo install -d /usr/local/bin \
   && sudo ln -fs "${HOME}/.local/bin/reuse" /usr/local/bin
 
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-RUN groupadd -g $GID -o build
-RUN useradd -m -u $UID -g $GID -G sudo -p -o -s /bin/bash build
-USER build
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+  && echo 'ALL ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod 700 /usr/local/bin/entrypoint.sh
+
 WORKDIR /z-wave-open-source
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/bin/bash"]

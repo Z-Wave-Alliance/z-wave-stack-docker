@@ -6,7 +6,7 @@ SPDX-License-Identifier: BSD-3-Clause
 -->
 
 # z-wave-stack-docker
-Offers a Docker image for building Z-Wave
+Offers a Docker image for building [Z-Wave](https://github.com/Z-Wave-Alliance/z-wave-stack).
 
 ## How to download a prebuilt image
 
@@ -24,17 +24,17 @@ $env:CR_PAT="YOUR_TOKEN"
 echo $env:CR_PAT | docker login ghcr.io -u YOUR_USERNAME --password-stdin
 ```
 
-### Download image
+### Download/Pull the latest image
 ```bash
-docker pull ghcr.io/z-wave-alliance/z-wave-stack-docker:v1.5.0
+docker pull ghcr.io/z-wave-alliance/z-wave-stack-docker:main
 ```
 
-## How to build image locally
+## How to build an image locally
 ```bash
-docker build . -t IMAGE_NAME:IMAGE_TAG
+docker build . -t <image name>
 ```
 
-## How to run image
+## How to run an image (on Ubuntu)
 ```bash
-docker run --rm -it IMAGE_NAME:IMAGE_TAG
+docker run -it --rm -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v $PWD:/z-wave-open-source <image name>:latest bash
 ```
