@@ -48,7 +48,6 @@ RUN deps='gdb \
   default-jre \
   nodejs \
   cmake \
-  cmake-data \
   doxygen \
   uncrustify \
   gosu \
