@@ -9,49 +9,50 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Copenhagen
 
 # Install gpg by itself as it needs recommended packages (at least dirmngr).
-RUN deps='gdb \
-  sudo \
-  curl \
+RUN deps='\
+  bash-completion \
+  bison \
   bzip2 \
   ca-certificates \
-  wget \
-  zip \
-  unzip \
-  tzdata \
+  clang \
+  cmake \
+  curl \
+  default-jre \
+  dos2unix \
+  doxygen \
   flex \
-  bison \
+  g++ \
+  g++-multilib \
+  gcc \
+  gcc-multilib \
+  gcovr \
+  gdb \
+  git \
+  gosu \
   graphviz \
-  make \
+  libboost-log1.88.0 \
+  libc6-dbg:i386 \
   libc6-dev \
+  make \
+  nodejs \
+  openssh-client \
   patch \
+  pipx \
   python3 \
+  python3-build \
   python3-pip \
   python3-virtualenv \
-  python3-build \
   python3-yaml \
-  pipx \
-  gcovr \
-  git \
-  gcc \
-  g++ \
-  gcc-multilib \
-  g++-multilib \
-  libboost-log1.88.0 \
-  dos2unix \
   ruby \
   ruby-dev \
-  clang \
-  libc6-dbg:i386 \
-  openssh-client \
-  valgrind \
+  sudo \
   texlive-bibtex-extra \
-  default-jre \
-  nodejs \
-  cmake \
-  doxygen \
+  tzdata \
   uncrustify \
-  gosu \
-  bash-completion \
+  unzip \
+  valgrind \
+  wget \
+  zip \
   ' \
     && dpkg --add-architecture i386 \
     && apt-get update \
