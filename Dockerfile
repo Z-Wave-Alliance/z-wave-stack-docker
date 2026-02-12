@@ -48,7 +48,6 @@ RUN deps='\
   sudo \
   texlive-bibtex-extra \
   tzdata \
-  uncrustify \
   unzip \
   valgrind \
   wget \
@@ -59,6 +58,17 @@ RUN deps='\
     && apt-get install -y --no-install-recommends $deps \
     && apt-get install -y gpg \
     && rm -rf /var/lib/apt/lists/*
+
+# Uncrustify 0.72, version 0.78 introduces formating changes
+ENV UNCRUSTIFY_PATH=/tmp/uncrustify
+ENV UNCRUSTIFY_VERSION=0.72.0
+RUN mkdir -p ${UNCRUSTIFY_PATH} \
+  && git clone -b "uncrustify-${UNCRUSTIFY_VERSION}" --quiet --depth 1 --single-branch https://github.com/uncrustify/uncrustify.git "${UNCRUSTIFY_PATH}" \
+  && cmake -S ${UNCRUSTIFY_PATH} -B ${UNCRUSTIFY_PATH}/build -D CMAKE_INSTALL_PREFIX=/usr/local -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+  && make -C ${UNCRUSTIFY_PATH}/build -j \
+  && sudo make -C ${UNCRUSTIFY_PATH}/build install \
+  && rm -rf ${UNCRUSTIFY_PATH} \
+  && uncrustify --version
 
 # Plantuml
 # TODO: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004135#53 (Last-Update: 20250219)
