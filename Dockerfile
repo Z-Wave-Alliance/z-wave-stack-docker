@@ -64,9 +64,9 @@ ENV UNCRUSTIFY_PATH=/tmp/uncrustify
 ENV UNCRUSTIFY_VERSION=0.72.0
 RUN mkdir -p ${UNCRUSTIFY_PATH} \
   && git clone -b "uncrustify-${UNCRUSTIFY_VERSION}" --quiet --depth 1 --single-branch https://github.com/uncrustify/uncrustify.git "${UNCRUSTIFY_PATH}" \
-  && cmake -S ${UNCRUSTIFY_PATH} -B ${UNCRUSTIFY_PATH}/build -D CMAKE_INSTALL_PREFIX=/usr/local -D CMAKE_BUILD_TYPE=RelWithDebInfo -GNinja \
-  && ninja -C ${UNCRUSTIFY_PATH}/build -j \
-  && sudo ninja -C ${UNCRUSTIFY_PATH}/build install \
+  && cmake -S ${UNCRUSTIFY_PATH} -B ${UNCRUSTIFY_PATH}/build -D CMAKE_INSTALL_PREFIX=/usr/local -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+  && make -C ${UNCRUSTIFY_PATH}/build -j \
+  && sudo make -C ${UNCRUSTIFY_PATH}/build install \
   && rm -rf ${UNCRUSTIFY_PATH} \
   && uncrustify --version
 
