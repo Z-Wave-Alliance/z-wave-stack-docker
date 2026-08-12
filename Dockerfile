@@ -105,12 +105,17 @@ RUN \
   && sudo apt clean \
   && rm -rf /var/lib/apt/lists/*
 
-# Reuse 5.1+
+# Reuse 6.2
+# Installed with pipx into a system-wide location so that reuse is in the PATH
+# for every user (the entrypoint runs as an unprivileged user).
+ENV PIPX_HOME=/opt/pipx
+ENV PIPX_BIN_DIR=/usr/local/bin
+ARG REUSE_VERSION=6.2
 RUN \
   echo "TODO: https://bugs.debian.org/1116303#2025" \
-  && pipx install reuse \
-  && sudo install -d /usr/local/bin \
-  && sudo ln -fs "${HOME}/.local/bin/reuse" /usr/local/bin
+  && pipx install "reuse[charset-normalizer]==${REUSE_VERSION}" \
+  && chmod -R a+rX ${PIPX_HOME} \
+  && reuse --version
 
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
   && echo 'ALL ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
