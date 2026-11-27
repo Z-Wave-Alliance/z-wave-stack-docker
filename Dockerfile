@@ -6,6 +6,8 @@
 FROM debian:trixie
 
 ARG DEBIAN_FRONTEND=noninteractive
+# Set automatically by BuildKit (e.g. amd64, arm64)
+ARG TARGETARCH
 ENV TZ=Europe/Copenhagen
 
 # Install gpg by itself as it needs recommended packages (at least dirmngr).
@@ -22,16 +24,13 @@ RUN deps='\
   doxygen \
   flex \
   g++ \
-  g++-multilib \
   gcc \
-  gcc-multilib \
   gcovr \
   gdb \
   git \
   gosu \
   graphviz \
   libboost-log1.88.0 \
-  libc6-dbg:i386 \
   libc6-dev \
   make \
   nodejs \
@@ -53,7 +52,10 @@ RUN deps='\
   wget \
   zip \
   ' \
-    && dpkg --add-architecture i386 \
+    && if [ "${TARGETARCH:-amd64}" = "amd64" ]; then \
+         deps="$deps g++-multilib gcc-multilib libc6-dbg:i386" \
+         && dpkg --add-architecture i386; \
+       fi \
     && apt-get update \
     && apt-get install -y --no-install-recommends $deps \
     && apt-get install -y gpg \
